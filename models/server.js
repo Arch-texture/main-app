@@ -10,9 +10,9 @@ class Server {
 
         this.paths = {
             auth: '/api/auth',
-            //students: '/api/students',
-            //grades: '/api/grades',
-            //restrictions: '/api/restrictions',
+            students: '/api/students',
+            grades: '/api/grades',
+            restrictions: '/api/restrictions',
         }
 
         this.middlewares();
@@ -27,9 +27,9 @@ class Server {
 
     routes() {
         this.app.use(this.paths.auth, require('../routes/auth'));
-        //this.app.use(this.paths.students, require('../routes/students'));
-        //this.app.use(this.paths.grades, require('../routes/grades'));
-        //this.app.use(this.paths.restrictions, require('../routes/restrictions'));
+        this.app.use(this.paths.students, require('../routes/students'));
+        this.app.use(this.paths.grades, require('../routes/grades'));
+        this.app.use(this.paths.restrictions, require('../routes/restrictions'));
     }
 
     listen() {
