@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
+const helmet = require('helmet');
+const compression = require('compression');
 
 class Server {
     constructor() {
@@ -23,6 +25,13 @@ class Server {
         this.app.use(cors());
         this.app.use(logger('dev'));
         this.app.use(express.json());
+        this.app.use(helmet());
+        this.app.use(compression());
+
+        this.app.use((err, req, res, next) => {
+            console.error(err.stack);
+            res.status(500).send('Something broke!');
+        });
     }
 
     routes() {
@@ -35,6 +44,13 @@ class Server {
     listen() {
         this.server.listen(this.port, () => {
             console.log(`Server running on port ${this.port}`);
+        });
+
+        process.on('SIGTERM', () => {
+            console.log('SIGTERM signal received: closing HTTP server');
+            this.server.close(() => {
+                console.log('HTTP server closed');
+            });
         });
     }
 
