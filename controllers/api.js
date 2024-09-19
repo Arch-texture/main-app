@@ -55,10 +55,12 @@ const getStudents = async (req, res) => {
     res.status(200).json({
       success: true,
       error: false,
-      excelentStudents,
-      goodStudents,
-      acceptableStudents,
-      badStudents,
+      data: {
+        excelent: excelentStudents,
+        good: goodStudents,
+        acceptable: acceptableStudents,
+        bad: badStudents,
+      },
     });
   } catch (error) {
     console.log(error.errors);
