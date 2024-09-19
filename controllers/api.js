@@ -38,7 +38,7 @@ const asignGrades = async (req, res) => {
 
   console.log("api asignGrades");
 
-  res.status(200).json({
+  res.status(501).json({
     msg: "asignGrades",
   });
 };
@@ -76,7 +76,7 @@ const createStudent = async (req, res) => {
 
   console.log("api createStudent");
 
-  res.status(200).json({
+  res.status(501).json({
     msg: "createStudent",
   });
 };
@@ -86,7 +86,7 @@ const createRestriction = async (req, res) => {
 
   console.log("api createRestriction");
 
-  res.status(200).json({
+  res.status(501).json({
     msg: "createRestriction",
   });
 };
@@ -96,7 +96,7 @@ const removeRestriction = async (req, res) => {
 
   console.log("api removeRestriction");
 
-  res.status(200).json({
+  res.status(501).json({
     msg: "removeRestriction",
   });
 };
