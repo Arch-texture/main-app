@@ -24,11 +24,10 @@ const logIn = async (req, res) => {
       token: token,
     });
   } catch (error) {
-    console.log(error.errors);
+    console.log(error.message);
 
-    res.status(500).json({
-      msg: "login",
-      error,
+    res.status(error.status ? error.status : 500).json({
+      msg: error.message,
     });
   }
 };
