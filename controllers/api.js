@@ -1,74 +1,102 @@
-const generateJWT = require('../helpers/generate-jwt');
+const generateJWT = require("../helpers/generateJwt");
 const jwt = require("jsonwebtoken");
+const { asignGrade } = require("../controllers/services/grades");
+const { searchMinMaxSS } = require("../controllers/services/search");
+const {
+  getProducts,
+  getProduct,
+  createProduct,
+  login,
+} = require("../controllers/services/fakestore");
 
-const login = async (req, res) => {
+const logIn = async (req, res) => {
+  try {
+    console.log("api logIn");
 
-    console.log(req.body);
+    const { email, password } = req.body;
 
-    console.log('login');
+    const loginCall = await login(email, password);
+
+    const token = await generateJWT();
 
     res.status(200).json({
-        msg: 'login'
+      msg: "login",
+      token: token,
     });
-}
+  } catch (error) {
+    console.log(error.errors);
+
+    res.status(500).json({
+      msg: "login",
+      error,
+    });
+  }
+};
 
 const asignGrades = async (req, res) => {
-    console.log(req.body);
+  console.log(req.body);
 
-    console.log('asignGrades');
+  console.log("api asignGrades");
 
-    res.status(200).json({
-        msg: 'asignGrades'
-    });
-}
+  res.status(200).json({
+    msg: "asignGrades",
+  });
+};
 
 const getStudents = async (req, res) => {
-    console.log(req.body);
+  try {
+    console.log("api getStudents");
 
-    console.log('getStudents');
+    const excelentStudents = await searchMinMaxSS(6.1, 7.0);
+    const goodStudents = await searchMinMaxSS(5.1, 6.0);
+    const acceptableStudents = await searchMinMaxSS(4.1, 5.0);
+    const badStudents = await searchMinMaxSS(1.1, 4.0);
 
     res.status(200).json({
-        msg: 'getStudents'
+      msg: "getStudents",
+      excelentStudents,
+      goodStudents,
+      acceptableStudents,
+      badStudents,
     });
-}
+  } catch (error) {}
+};
 
 const createStudent = async (req, res) => {
-    console.log(req.body);
+  console.log(req.body);
 
-    console.log('createStudent');
+  console.log("api createStudent");
 
-    res.status(200).json({
-        msg: 'createStudent'
-    });
-}
+  res.status(200).json({
+    msg: "createStudent",
+  });
+};
 
 const createRestriction = async (req, res) => {
-    console.log(req.body);
+  console.log(req.body);
 
-    console.log('createRestriction');
+  console.log("api createRestriction");
 
-    res.status(200).json({
-        msg: 'createRestriction'
-    });
-}
+  res.status(200).json({
+    msg: "createRestriction",
+  });
+};
 
 const removeRestriction = async (req, res) => {
-    console.log(req.body);
+  console.log(req.body);
 
-    console.log('removeRestriction');
+  console.log("api removeRestriction");
 
-    res.status(200).json({
-        msg: 'removeRestriction'
-    });
-}
-
-
+  res.status(200).json({
+    msg: "removeRestriction",
+  });
+};
 
 module.exports = {
-    login,
-    asignGrades,
-    getStudents,
-    createStudent,
-    createRestriction,
-    removeRestriction
-}
+  logIn,
+  asignGrades,
+  getStudents,
+  createStudent,
+  createRestriction,
+  removeRestriction,
+};
