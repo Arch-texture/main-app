@@ -23,5 +23,4 @@ const searchMinMaxSS = async (min, max) => {
 
 module.exports = {
   searchMinMaxSS,
-  addGradeSS,
 };
