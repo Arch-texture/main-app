@@ -10,7 +10,9 @@ router.post(
   [
     check("id").isUUID().withMessage("Invalid id format"),
     check("grades").isArray().withMessage("Grades must be an array"),
-    check("grades.*.course").isString().withMessage("Course must be a string"),
+    check("grades.*.subjectName")
+      .isString()
+      .withMessage("Course must be a string"),
     check("grades.*.gradename")
       .isString()
       .withMessage("Grade name must be a string"),
