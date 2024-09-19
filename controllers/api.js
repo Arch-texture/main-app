@@ -53,13 +53,22 @@ const getStudents = async (req, res) => {
     const badStudents = await searchMinMaxSS(1.1, 4.0);
 
     res.status(200).json({
-      msg: "getStudents",
+      success: true,
+      error: false,
       excelentStudents,
       goodStudents,
       acceptableStudents,
       badStudents,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error.errors);
+
+    res.status(500).json({
+      success: false,
+      error: true,
+      msg: error.errors,
+    });
+  }
 };
 
 const createStudent = async (req, res) => {
