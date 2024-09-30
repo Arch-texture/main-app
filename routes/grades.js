@@ -3,11 +3,14 @@ const { check } = require("express-validator");
 const { asignGrades } = require("../controllers/api");
 const { validateFields } = require("../middleware/validateFields");
 
+const { validateRole } = require("../middleware/validateRole");
+
 const router = Router();
 
 router.post(
   "/asign",
   [
+    validateRole("teacher"),
     check("id").isUUID().withMessage("Invalid id format"),
     check("grades").isArray().withMessage("Grades must be an array"),
     check("grades.*.subjectName")

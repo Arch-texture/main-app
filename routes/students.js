@@ -2,10 +2,11 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 const { getStudents, createStudent } = require("../controllers/api");
 const { validateFields } = require("../middleware/validateFields");
+const { validateRole } = require("../middleware/validateRole");
 
 const router = Router();
 
-router.get("/", getStudents);
+router.get("/", [validateRole("logged")], getStudents);
 
 router.post(
   "/create",
