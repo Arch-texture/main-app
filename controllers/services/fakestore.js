@@ -31,7 +31,6 @@ const createProduct = async (product) => {
 
 const login = async (username, password) => {
   try {
-
     const response = await axios.post(`${baseUrl}/auth/login`, {
       username,
       password,
@@ -39,6 +38,7 @@ const login = async (username, password) => {
 
     return response.data;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
