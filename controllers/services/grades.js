@@ -2,19 +2,32 @@ const axios = require("axios");
 
 const baseUrl = process.env.GS_BASE_URL;
 
-const asignGrade = async (studentId, grade) => {
+const asignGradeGS = async (studentId, grades) => {
   try {
-    const response = await axios.post(`${baseUrl}/add-grade`, {
-      studentId,
-      grade,
+    console.log("asignGradeGS");
+    console.log(studentId, grade);
+    console.log(`${baseUrl}/api/Grades`);
+
+    const responses = [];
+
+    grades.forEach(async (grade) => {
+      console.log(grade);
+      const response = await axios.post(`${baseUrl}/Grades`, {
+        studentId: studentId,
+        grade: grade,
+      });
+
+      console.log("request success");
+
+      responses.push(response);
     });
 
-    return response.data;
+    return responses;
   } catch (error) {
     throw error;
   }
 };
 
 module.exports = {
-  asignGrade,
+  asignGradeGS,
 };
