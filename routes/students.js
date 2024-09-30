@@ -11,7 +11,7 @@ router.post(
   "/create",
   [
     check("name").isString().withMessage("Name must be a string"),
-    check("lastname").isString().withMessage("Lastname must be a string"),
+    check("lastName").isString().withMessage("Lastname must be a string"),
     check("email").isEmail().withMessage("Invalid email format"),
     validateFields,
   ],
