@@ -20,9 +20,11 @@ const validateRole = (role) => {
 
       // Check the user's role
       if (decodedToken.role !== role) {
-        return res.status(403).json({
-          msg: "Access denied: insufficient permissions",
-        });
+        if(role !== "logged"){
+          return res.status(403).json({
+            msg: "Access denied: insufficient permissions",
+          });
+        }
       }
 
       // Attach the decoded token to the request object
