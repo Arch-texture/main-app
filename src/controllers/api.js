@@ -1,13 +1,13 @@
 const generateJWT = require("../helpers/generateJwt");
 const jwt = require("jsonwebtoken");
 
-const { asignGradeGS } = require("./services/grades");
+const { asignGradeGS } = require("../clients/grades");
 const {
   validateStudentRS,
   createRestrictionRS,
   restrictionExistsRS,
   removeRestrictionRS,
-} = require("./services/restrictions");
+} = require("../clients/restrictions");
 const {
   searchMinMaxSS,
   asignGradesSS,
@@ -15,12 +15,12 @@ const {
   addRestrictionSS,
   deleteRestrictionSS,
   searchByRestrictionSS,
-} = require("./services/search");
+} = require("../clients/search");
 const {
   loginUS,
   studentExistsUS,
   createStudentUS,
-} = require("./services/user");
+} = require("../clients/user");
 const { error } = require("winston");
 
 const logIn = async (req, res) => {
