@@ -2,18 +2,21 @@ const axios = require("axios");
 
 const baseUrl = process.env.US_BASEURL;
 
+const headers = {'X-API-Key': '14c2ced0'};
+
 const loginUS = async (email, password) => {
   try {
     console.log("login US");
     console.log(email, password);
     console.log(`${baseUrl}/login`);
 
-    const response = await axios.post(`${baseUrl}/login`, { email, password });
+    const response = await axios.post(`${baseUrl}/login`, { email, password }, { headers });
 
     console.log("request successful");
 
     return response.data;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
@@ -22,9 +25,11 @@ const studentExistsUS = async (id) => {
   try {
     console.log("studentExistsUS");
     console.log(id);
-    console.log(`${baseUrl}/Student/${id}`);
+    console.log(`${baseUrl}/`);
 
-    const response = await axios.get(`${baseUrl}/Student/${id}`);
+    const params = {id: id}
+
+    const response = await axios.get(`${baseUrl}/`, {headers,  params: params });
 
     console.log("request successful");
 
