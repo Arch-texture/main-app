@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { getStudents, createStudent } = require("../controllers/api");
-const { validateFields } = require("../middleware/validateFields");
-const { validateRole } = require("../middleware/validateRole");
+const { getStudents, createStudent } = require("../controllers/studentsController");
+const { validateFields } = require("../middleware/validateFieldsMiddleware");
+const { validateRole } = require("../middleware/validateRoleMiddleware");
 
 const router = Router();
 
