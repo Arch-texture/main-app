@@ -1,26 +1,34 @@
 const axios = require("axios");
 
-const baseUrl = process.env.GS_BASE_URL;
+const baseUrl = "https://my.api.mockaroo.com/api/grade";
+
+const headers = { "X-API-Key": "14c2ced0" };
 
 const asignGradeGS = async (studentId, grades) => {
   try {
     console.log("asignGradeGS");
-    console.log(studentId, grade);
+    console.log(studentId, grades);
     console.log(`${baseUrl}/api/Grades`);
 
-    const responses = [];
+    const params = { id: studentId };
 
-    grades.forEach(async (grade) => {
-      console.log(grade);
-      const response = await axios.post(`${baseUrl}/Grades`, {
-        studentId: studentId,
-        grade: grade,
-      });
+    const responses = await Promise.all(
+      grades.map(async (grade) => {
+        console.log(grade);
+        const response = await axios.post(
+          `${baseUrl}/`,
+          {
+            grade: grade,
+          },
+          { headers: headers, params: params }
+        );
+        console.log("request success GS asign grade");
+        return response.data;
+      })
+    );
 
-      console.log("request success");
-
-      responses.push(response);
-    });
+    console.log("impresion de responses");
+    console.log(responses);
 
     return responses;
   } catch (error) {
