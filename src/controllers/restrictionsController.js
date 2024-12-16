@@ -34,7 +34,7 @@ const createRestriction = async (req, res) => {
       createdRestrictions.push(createRestrictionCall);
     }
 
-    const dbConsistencyCall = await addRestrictionSS(createRestrictionCall);
+    const dbConsistencyCall = await addRestrictionSS(createdRestrictions);
 
     res.status(200).json({
       msg: "createRestriction",
