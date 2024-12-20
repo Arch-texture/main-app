@@ -1,9 +1,7 @@
 const generateJWT = require("../helpers/generateJwt");
 const jwt = require("jsonwebtoken");
 
-const {
-  loginUS,
-} = require("../clients/usersServiceClient");
+const { loginUS } = require("../clients/usersServiceClient");
 
 const logIn = async (req, res) => {
   try {
@@ -35,3 +33,9 @@ const logIn = async (req, res) => {
 };
 
 module.exports = { logIn };
+
+/*
+TOKEN ADMIN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmFjMzBhLWRjZTEtNGVjMi05ZjkwLWQzYjkyMzhjYmIwNyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNDcwNzk3NCwiZXhwIjoxNzM3Mjk5OTc0fQ.TcmxR8O_cLie1a1vu2p-3h0Ha3YMbeBftd5oZ7dJZBI
+TOKEN TEACHER: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmFjMzBhLWRjZTEtNGVjMi05ZjkwLWQzYjkyMzhjYmIwNyIsInJvbGUiOiJ0ZWFjaGVyIiwiaWF0IjoxNzM0NzA3NjE5LCJleHAiOjE3MzcyOTk2MTl9.MB8kSu-2pHnM_pOrcukI-PRxANwtlJH5lnEVYPOedsA
+TOKEN STUDENT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE5NmFjMzBhLWRjZTEtNGVjMi05ZjkwLWQzYjkyMzhjYmIwNyIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzM0NzA3NTk2LCJleHAiOjE3MzcyOTk1OTZ9.XzXQKOv4nKg28tDPtmyIRkehZ9VVk0IQLVtn-Jy2S24
+*/
