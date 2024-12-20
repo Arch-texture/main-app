@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const baseUrl = process.env.US_BASEURL;
 
-const headers = {'X-API-Key': '14c2ced0'};
+const headers = { "X-API-Key": "14c2ced0" };
 
 const loginUS = async (email, password) => {
   try {
@@ -10,9 +10,14 @@ const loginUS = async (email, password) => {
     console.log(email, password);
     console.log(`${baseUrl}/login`);
 
-    const response = await axios.post(`${baseUrl}/login`, { email, password }, { headers });
+    const response = await axios.post(
+      `${baseUrl}/login`,
+      { email, password },
+      { headers }
+    );
 
     console.log("request successful");
+    console.log(response);
 
     return response.data;
   } catch (error) {
@@ -23,15 +28,12 @@ const loginUS = async (email, password) => {
 
 const studentExistsUS = async (id) => {
   try {
-    console.log("studentExistsUS");
-    console.log(id);
-    console.log(`${baseUrl}/`);
+    const params = { id: id };
 
-    const params = {id: id}
-
-    const response = await axios.get(`${baseUrl}/`, {headers,  params: params });
-
-    console.log("request successful");
+    const response = await axios.get(`${baseUrl}/`, {
+      headers,
+      params: params,
+    });
 
     return response.data;
   } catch (error) {
@@ -43,9 +45,17 @@ const createStudentUS = async (student) => {
   try {
     console.log("createStudentUS");
     console.log(student);
-    console.log(`${baseUrl}/Student`);
+    console.log(`${baseUrl}/`);
 
-    const response = await axios.post(`${baseUrl}/Student`, student);
+    const queryParams = new URLSearchParams({
+      name: student.name,
+      firstLastName: student.firstLastName,
+      secondLastName: student.secondLastName,
+      email: student.email,
+      key: headers["X-API-Key"],
+    }).toString();
+
+    const response = await axios.post(`${baseUrl}/?${queryParams}`);
 
     console.log("request successful");
 
@@ -54,8 +64,6 @@ const createStudentUS = async (student) => {
     throw error;
   }
 };
-
-
 
 module.exports = {
   loginUS,
