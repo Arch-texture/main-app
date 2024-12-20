@@ -1,7 +1,4 @@
-const {
-  studentExistsUS,
-} = require("../clients/usersServiceClient");
-
+const { studentExistsUS } = require("../clients/usersServiceClient");
 
 const {
   createRestrictionRS,
@@ -18,30 +15,25 @@ const {
 const createRestriction = async (req, res) => {
   try {
     console.log("api createRestriction");
-    const { studentsId, restrictionReason } = req.body;
+    const { students, reason } = req.body;
+    console.log(students, reason);
 
-    for (const studentId of studentsId) {
-      const validateStudentExistsCall = await studentExistsUS(studentId);
-    }
+    await Promise.all(
+      students.map((studentId) => studentExistsUS(studentId.id))
+    );
 
-    let createdRestrictions;
-
-    for (const studentId of studentsId) {
-      const createRestrictionCall = await createRestrictionRS(
-        studentId,
-        restrictionReason
-      );
-      createdRestrictions.push(createRestrictionCall);
-    }
+    const createdRestrictions = await Promise.all(
+      students.map((studentId) => createRestrictionRS(reason, studentId))
+    );
 
     const dbConsistencyCall = await addRestrictionSS(createdRestrictions);
 
     res.status(200).json({
       msg: "createRestriction",
-      data: createRestrictionCall,
+      data: createdRestrictions,
     });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
 
     res.status(error.status ? error.status : 500).json({
       success: false,

@@ -22,14 +22,16 @@ const validateStudentRS = async (studentId) => {
 const createRestrictionRS = async (reason, uuid_student) => {
   try {
     console.log("createRestrictionRS");
-    console.log(restriction, students);
+    console.log(reason, uuid_student.id);
     console.log(`${baseUrl}/`);
 
-    const response = await axios.post(
-      `${baseUrl}/`,
-      { reason, uuid_student },
-      headers
-    );
+    const queryParams = new URLSearchParams({
+      key: headers["X-API-Key"],
+      uuid_student: uuid_student.id,
+      reason: reason,
+    }).toString();
+
+    const response = await axios.post(`${baseUrl}/?${queryParams}`);
 
     console.log("request successfull");
 

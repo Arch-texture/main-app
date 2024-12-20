@@ -69,10 +69,14 @@ const addRestrictionSS = async (restriction) => {
   try {
     console.log("createRestrictionSS");
     console.log(restriction);
-    console.log(`${baseUrl}/Student/AddRestriction`);
+    console.log(`${baseUrl}/add-user-restriction`);
+
+    const queryParams = new URLSearchParams({
+      key: headers["X-API-Key"],
+    }).toString();
 
     const response = await axios.post(
-      `${baseUrl}/add-user-restriction`,
+      `${baseUrl}/add-user-restriction?${queryParams}`,
       restriction
     );
 
