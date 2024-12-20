@@ -2,10 +2,7 @@ const {
   searchMinMaxSS,
   createStudentSS,
 } = require("../clients/searchServiceClient");
-const {
-  createStudentUS,
-} = require("../clients/usersServiceClient");
-
+const { createStudentUS } = require("../clients/usersServiceClient");
 
 const getStudents = async (req, res) => {
   try {
@@ -43,7 +40,8 @@ const createStudent = async (req, res) => {
 
     const student = {
       name: req.body.name,
-      lastName: req.body.lastName,
+      firstLastName: req.body.firstLastName,
+      secondLastName: req.body.secondLastName,
       email: req.body.email,
     };
 
@@ -51,12 +49,12 @@ const createStudent = async (req, res) => {
 
     const dbConsistencyCall = await createStudentSS(createStudentCall);
 
-    res.status(501).json({
+    res.status(201).json({
       msg: "createStudent",
       data: createStudentCall,
     });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
 
     res.status(error.status ? error.status : 500).json({
       success: false,
