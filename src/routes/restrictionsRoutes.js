@@ -1,13 +1,16 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
-const { createRestriction, removeRestriction } = require("../controllers/restrictionsController");
+const {
+  createRestriction,
+  removeRestriction,
+} = require("../controllers/restrictionsController");
 const { validateFields } = require("../middleware/validateFieldsMiddleware");
 const { validateRole } = require("../middleware/validateRoleMiddleware");
 
 const router = Router();
 
 router.post(
-  "/create",
+  "/",
   [
     validateRole("admin"),
     check("reason").isString().withMessage("Reason must be a string"),
@@ -19,7 +22,7 @@ router.post(
 );
 
 router.delete(
-  "/remove",
+  "/",
   [
     validateRole("admin"),
     check("query").isString().withMessage("Query must be a string"),
