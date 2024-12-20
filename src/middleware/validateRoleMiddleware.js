@@ -1,6 +1,13 @@
 const { response } = require("express");
 const jwt = require("jsonwebtoken");
 
+const roleMapping = {
+  student: 1,
+  logged: 1,
+  teacher: 2,
+  admin: 3,
+};
+
 const validateRole = (role) => {
   return (req, res = response, next) => {
     // Extract the token from the Authorization header
@@ -17,14 +24,20 @@ const validateRole = (role) => {
     try {
       // Verify the token
       const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+      const userRole = decodedToken.role;
+      console.log("userRole", userRole);
+      console.log("role", role);
 
-      // Check the user's role
-      if (decodedToken.role !== role) {
-        if(role !== "logged"){
-          return res.status(403).json({
-            msg: "Access denied: insufficient permissions",
-          });
-        }
+      const mappedUserRole = roleMapping[userRole];
+      const mappedRole = roleMapping[role];
+
+      console.log("mappedUserRole", mappedUserRole);
+      console.log("mappedRole", mappedRole);
+
+      if (mappedUserRole < mappedRole) {
+        return res.status(403).json({
+          msg: "Forbidden: Insufficient role",
+        });
       }
 
       // Attach the decoded token to the request object
