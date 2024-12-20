@@ -9,7 +9,7 @@ const generateJWT = (id = "", role) => {
       process.env.JWT_KEY,
       {
         //expiresIn: '2h'
-        expiresIn: "30m",
+        expiresIn: "1d",
       },
       (error, token) => {
         if (error) {
