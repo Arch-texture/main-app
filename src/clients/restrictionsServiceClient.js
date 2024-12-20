@@ -45,11 +45,12 @@ const restrictionExistsRS = async (query) => {
   try {
     console.log("restrictionExistsRS");
     console.log(query);
-    console.log(`${baseUrl}/exists`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    console.log(`${baseUrl}/`);
 
-    const response = await axios.get(`${baseUrl}/exists`, headers); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    const response = await axios.get(`${baseUrl}/`, { headers: headers });
 
-    console.log("request successfull");
+    console.log("request successfull opaa");
+    console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -61,11 +62,16 @@ const removeRestrictionRS = async (restrictionId, studentId) => {
   try {
     console.log("removeRestrictionRS");
     console.log(restrictionId, studentId);
-    console.log(`${baseUrl}/`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    const queryParams = new URLSearchParams({
+      key: headers["X-API-Key"],
+      student_id: studentId.id,
+      restriction_id: restrictionId,
+    }).toString();
 
-    const response = await axios.delete(`${baseUrl}/`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
-
-    console.log("request successfull");
+    console.log(`${baseUrl}/?${queryParams}`);
+    const response = await axios.delete(`${baseUrl}/?${queryParams}`);
+    console.log("request successfull opaa");
+    console.log(response.data);
 
     return response.data;
   } catch (error) {

@@ -51,27 +51,30 @@ const removeRestriction = async (req, res) => {
 
     const restrictionExistsCall = await restrictionExistsRS(query);
 
-    const restrictionUUID = restrictionExistsCall.restrictions.uuid;
+    const restrictionUUID = restrictionExistsCall.uuid;
+
+    console.log(restrictionUUID);
 
     const searchByRestrictionCall = await searchByRestrictionSS(
       restrictionUUID
     );
 
-    for (const studentId of searchByRestrictionCall.id) {
-      const removeRestrictionCall = await removeRestrictionRS(
-        restrictionUUID,
-        studentId
-      );
-    }
+    const removeRestrictionCalls = await Promise.all(
+      searchByRestrictionCall.map((id) =>
+        removeRestrictionRS(restrictionUUID, id)
+      )
+    );
+
+    console.log(removeRestrictionCalls);
 
     const dbConsistencyCall = await deleteRestrictionSS(restrictionUUID);
 
     res.status(200).json({
       msg: "removeRestriction",
-      data: removeRestrictionCall,
+      data: removeRestrictionCalls,
     });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
 
     res.status(error.status ? error.status : 500).json({
       success: false,

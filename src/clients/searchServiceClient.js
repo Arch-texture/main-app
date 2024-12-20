@@ -92,10 +92,14 @@ const deleteRestrictionSS = async (restrictionId) => {
   try {
     console.log("deleteRestrictionSS");
     console.log(restrictionId);
-    console.log(`${baseUrl}/Restriction/${restrictionId}`);
+    console.log(`${baseUrl}/restriction`);
+    const queryParams = new URLSearchParams({
+      key: headers["X-API-Key"],
+      uuid: restrictionId,
+    }).toString();
 
     const response = await axios.delete(
-      `${baseUrl}/Student/deleteRestriction/${restrictionId}`
+      `${baseUrl}/restriction/?${queryParams}`
     );
 
     console.log("request succesful");
@@ -112,9 +116,9 @@ const searchByRestrictionSS = async (query) => {
     console.log(query);
     console.log(`${baseUrl}/Search/searchByRestriction/${query}`);
 
-    const response = await axios.get(
-      `${baseUrl}/Search/searchByRestriction/${query}`
-    );
+    const response = await axios.get(`${baseUrl}/by-restriction`, {
+      headers: headers,
+    });
 
     console.log("request successful");
 
