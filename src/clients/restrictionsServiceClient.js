@@ -1,16 +1,17 @@
 const axios = require("axios");
 
-const baseUrl = process.env.RS_BASE_URL;
+const baseUrl = process.env.RS_BASEURL;
+
+const headers = { "X-API-Key": "14c2ced0" };
 
 const validateStudentRS = async (studentId) => {
   try {
-    console.log("validateStudent");
-    console.log(studentId);
-    console.log(`${baseUrl}/`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    const params = { uuid_student: studentId };
 
-    const response = await axios.get(`${baseUrl}/`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
-
-    console.log("request successfull");
+    const response = await axios.get(`${baseUrl}/validate-student`, {
+      headers,
+      params,
+    });
 
     return response.data;
   } catch (error) {
@@ -22,9 +23,13 @@ const createRestrictionRS = async (reason, uuid_student) => {
   try {
     console.log("createRestrictionRS");
     console.log(restriction, students);
-    console.log(`${baseUrl}/`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    console.log(`${baseUrl}/`);
 
-    const response = await axios.post(`${baseUrl}/`, {reason, uuid_student}); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    const response = await axios.post(
+      `${baseUrl}/`,
+      { reason, uuid_student },
+      headers
+    );
 
     console.log("request successfull");
 
@@ -38,9 +43,9 @@ const restrictionExistsRS = async (query) => {
   try {
     console.log("restrictionExistsRS");
     console.log(query);
-    console.log(`${baseUrl}/`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    console.log(`${baseUrl}/exists`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
 
-    const response = await axios.get(`${baseUrl}/`); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
+    const response = await axios.get(`${baseUrl}/exists`, headers); //CAMBIAR CON EL ENPOINT CORRESPONDIENTE
 
     console.log("request successfull");
 
