@@ -1,22 +1,26 @@
 const axios = require("axios");
+const { query } = require("express");
 
 const baseUrl = process.env.SS_BASEURL;
+
+const headers = { "X-API-Key": "14c2ced0" };
 
 const searchMinMaxSS = async (min, max) => {
   try {
     console.log("search min max SS");
     console.log(min, max);
-    console.log(`${baseUrl}/Search/searchStudentByGrade/${min},${max}`);
+    console.log(`${baseUrl}`);
 
-    const response = await axios.get(
-      `${baseUrl}/Search/searchStudentByGrade/${min},${max}`
-    );
+    const response = await axios.get(`${baseUrl}/${min},${max}`, {
+      headers,
+    });
 
     console.log("data reiceved");
     console.log(response.data);
 
     return response.data;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
@@ -25,18 +29,14 @@ const asignGradesSS = async (studentId, grades) => {
   try {
     console.log("asignGradesSS");
     console.log(studentId, grades);
-    console.log(`${baseUrl}/Student/AddGrade/${studentId}`);
-    /*
-    const response = await axios.post(
-      `${baseUrl}/Student/AddGrade/${studentId}`,
-      grades
-    );
+    console.log(`${baseUrl}/add-grades`);
+    const response = await axios.post(`${baseUrl}/add-grades`, grades, {
+      headers: headers,
+    });
 
     console.log("request succesful");
 
     return response.message;
-
-    */
   } catch (error) {
     throw error;
   }
@@ -46,16 +46,20 @@ const createStudentSS = async (student) => {
   try {
     console.log("createStudent");
     console.log(student);
-    console.log(`${baseUrl}/Student`);
+    console.log(`${baseUrl}/create-student`);
 
-    
-    const response = await axios.post(`${baseUrl}/Student/, student`);
+    const queryParams = new URLSearchParams({
+      key: headers["X-API-Key"],
+    }).toString();
+
+    const response = await axios.post(
+      `${baseUrl}/create-student?${queryParams}`,
+      student
+    );
 
     console.log("request succesful");
 
     return response.message;
-
-
   } catch (error) {
     throw error;
   }
@@ -68,7 +72,7 @@ const addRestrictionSS = async (restriction) => {
     console.log(`${baseUrl}/Student/AddRestriction`);
 
     const response = await axios.post(
-      `${baseUrl}/Student/AddRestriction`,
+      `${baseUrl}/add-user-restriction`,
       restriction
     );
 
